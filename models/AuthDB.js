@@ -4,10 +4,11 @@ mongoose.Promise = require('bluebird')
 const Schema = mongoose.Schema
 
 const AuthSchema = new Schema({
-  Name : {type: String,require: true},
   Email: {type: String, unique: true},
-  Lastname: {type: String,require: true},
   Pass: {type: String,require: true},
+  Firstname : {type: String,require: true},
+  Lastname: {type: String,require: true},
+  tel:{type: String,require: true},
   reg_time : {
             type : Date, default: Date.now
         }

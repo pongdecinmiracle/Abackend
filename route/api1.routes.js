@@ -1,44 +1,44 @@
-// // 'use strict';
 const express = require('express')
 const mongoose = require('mongoose')
 const apiDB = require('../models/apitrack')
-const API_KEY = '533a0476-6493-48e0-9c80-329dc76c6082';
-const Aftership = require('./lib/aftership')(API_KEY);
+// const multer = require('multer');
 const app = express.Router()
-app.route('/')
-.post((req, res) => {
+var data
+var detail
+  // app.use((req,res,next)=>{
+  //   console.log('hello');
+  //   next();
+  // })
   //ET089578821TH
-    Aftership.call('GET', '/trackings/thailand-post/'+req.body.tracknumber, function (err, result) {
-  	if (err) {
-  		console.log(err);
-  	} else {
-  		// console.log(result.data.tracking.tracking_number);
-      var Itemlen = Object.keys(result.data.tracking.checkpoints).length;
-      var Gson gson = new Gson();
-      var Staff obj = new Staff();
-      var jsonInString = gson.toJson(obj);
-      // for(var i=0;i<Itemlen;i++){
-      //             var ApiAdd = new apiDB({
-      //             trackno: result.data.tracking.tracking_number,
-      //             slug: result.data.tracking.checkpoints[i].slug,
-      //             city: result.data.tracking.checkpoints[i].city,
-      //             created_at: result.data.tracking.checkpoints[i].created_at,
-      //             location: result.data.tracking.checkpoints[i].location,
-      //             country_name: result.data.tracking.checkpoints[i].country_name,
-      //             message: result.data.tracking.checkpoints[i].message,
-      //             country_iso3: result.data.tracking.checkpoints[i].country_iso3,
-      //             tag: result.data.tracking.checkpoints[i].tag,
-      //             checkpoint_time: result.data.tracking.checkpoints[i].checkpoint_time,
-      //             coordinates: result.data.tracking.checkpoints[i].coordinates,
-      //             state: result.data.tracking.checkpoints[i].state,
-      //             zip: result.data.tracking.checkpoints[i].zip
-      //           })
-      //           ApiAdd.save(function (err, fluffy) {
-      //                     if (err) return console.error(err);
-      //                     else console.log("Save Success");
-      //                 });
-      //     }
-      //   }
+  app.route('/')
+  .post((req, res) => {
+  data = req.body.trackno
+  // detail = data[0]
+    // console.log(data)
+    console.log(data);
+    console.log("post ok");
+    // res.send({})
+  })
+  if(data==0){
+
+  }else{
+    app.route('/')
+    .get((req, res) => {
+        apiDB.find({"trackno":data}, (err, docs) => {
+          if(err){
+            apiDB.find({"trackno":"Not Found"}, (err, docs) => {
+              res.send(docs)
+            })
+            data=0
+          }else{
+          res.send(docs) //true
+          // console.log(docs)
+          console.log("get ok");}
+          // console.log(docs);
+          // data=0
+        })
+
     })
-})
+}
+
 module.exports = app
