@@ -4,55 +4,27 @@ const Auth = require('../models/AuthDB')
 const passport = require('passport')
 const jwt = require('jsonwebtoken'); 
 const expressJwt = require('express-jwt');
+//====================================================
 const secret = 'this is the secret secret secret 12356';
+//====================================================
 const app = express.Router()
 
-var data
+let data
 app.route('/')
-  .get((req, res) => {
-       Auth.find({}, (err, docs) => {
-         res.send(docs)
-         console.log(docs)
-       
-    data=docs
-    
-         var profile = {
-        first_name: data.Fristname,
-        last_name: data.Lastname,
-        email: data.Email,
-        id: 123
+  .post((req, res) => {
+    //test
+//       Auth.find({$and:[{"Email":"pong@gmail.com"},{"Pass":"1234"}]}, (err, docs) => {
+    //real
+       Auth.find({$and:[{"Email":req.body.Email},{"Pass":req.body.Pass}]}, (err, docs) => {
+    var profile = {
+        first_name: docs[0].Firstname,
+        last_name: docs[0].Lastname,
+        email: docs[0].Email
             };
-        console.log(profile)
-      // We are sending the profile inside the token
-    var token = jwt.sign(profile, secret,{ expiresIn: '1h' });
-
+    var token = jwt.sign(profile, secret,{ expiresIn: '1s' });
       res.json({ token: token });
-
-    
-    
     })
     
 })
-    
-//    var name= Auth.find({})
-////    console.log(name)
-//    var profile = {
-//    first_name: name.Fristname,
-//    last_name: name.Lastname,
-//    email: name.Email,
-//    id: 123
-//  };
-//    console.log(profile)
-//  // We are sending the profile inside the token
-//var token = jwt.sign(profile, secret,{ expiresIn: '1h' });
-//
-//  res.json({ token: token });
-
-//    
-//  
-//
-//    
-//    
-//})
 
 module.exports = app
