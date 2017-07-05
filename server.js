@@ -42,6 +42,7 @@ mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`, (
 app.use('/trackno', cors({ origin: 'http://localhost:3000' }))
 app.use('/register', cors({ origin: 'http://localhost:3000' }))
 app.use('/login', cors({ origin: 'http://localhost:3000' }))
+//===========================================================
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
 // app.use('/logout', cors({ origin: 'http://localhost:3000' }))
 

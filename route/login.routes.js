@@ -18,10 +18,10 @@ var Pass
 //  console.log(req.body.Email)
 //  console.log(req.body.Pass) 
 //})
-
-app.post('/users/authenticate', function(req, res) {
-  console.log(req.body.Email)
-  console.log(req.body.Pass)
+// app.post('/users/authenticate', function(req, res) {
+app.post('/', function(req, res) {
+  // console.log(req.body.Email)
+  // console.log(req.body.Pass)
   Auth.findOne({ 
     Email: req.body.Email
   }, function(err, user) {
@@ -43,7 +43,7 @@ app.post('/users/authenticate', function(req, res) {
                     email: user.Email
                         };
                 var token = jwt.sign(profile, secret,{
-                    expiresIn: '1m' // exp in 24 hr
+                    expiresIn: '1440m' // exp in 24 hr
                     });
 //            app.get('/',function(req,res){
                    res.json({
@@ -55,7 +55,7 @@ app.post('/users/authenticate', function(req, res) {
                 }
             }
         })
-    console.log('pass')
+    // console.log('pass')
     })
 //                app.route('/users/authenticate')
 //                    .get((req, res) => {
