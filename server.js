@@ -16,11 +16,11 @@ const flash = require('connect-flash')
 const app = express()
 const PORT = 3002
 //===========================================================
-const auth = require('./route/auth.routes') //register
+const register = require('./route/register.routes') //register
 const login = require('./route/login.routes') //login
 // const logout = require('./route/logout.routes') //login
-const api = require('./route/api.routes')
-const api1 = require('./route/api1.routes')
+const addtracking = require('./route/addtracking.routes')
+const trackno = require('./route/trackno.routes')
 const token = require('./route/token.routes')
 const test = require('./route/test.routes')
 const users = require('./route/user.routes')
@@ -35,14 +35,14 @@ mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`, (
   if (err) console.log('connect fail')
   else console.log('connect success')
 })
-require('./config/passport')(passport);
+
 
 //===========================================================
 
-app.use('/api1', cors({ origin: 'http://localhost:3000' }))
+app.use('/trackno', cors({ origin: 'http://localhost:3000' }))
+app.use('/register', cors({ origin: 'http://localhost:3000' }))
+app.use('/login', cors({ origin: 'http://localhost:3000' }))
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
-app.use('/auth', cors({ origin: 'http://localhost:3000' }))
- app.use('/login', cors({ origin: 'http://localhost:3000' }))
 // app.use('/logout', cors({ origin: 'http://localhost:3000' }))
 
 //===========================================================
@@ -58,14 +58,16 @@ app.use(passport.session());
 //   next();
 // });
 
-//===========================================================
-app.use('/auth', auth) //register
+//========================Routes===================================
+app.use('/register', register) //register
 app.use('/login', login) //login
-app.use('/api' , api)
-app.use('/api1' , api1)
-app.use('/token', token)
+app.use('/users', users) //view profile
+app.use('/addtracking' , addtracking) //add tracknumber
+app.use('/trackno' , trackno) //tracking number
+//=========================Test==================================
+app.use('/token', token) //test token
 app.use('/test', test)
-app.use('/users', users)
+
 
 
 

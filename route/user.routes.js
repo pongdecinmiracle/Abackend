@@ -17,13 +17,15 @@ const app = express.Router()
               // check header or url parameters or post parameters for token
               var token = req.body.token || req.query.token || req.headers['x-access-token'];
               if (token) {
-                  console.log(token)  
+                  //console.log(token)  
                     jwt.verify(token, secret , function(err, decoded) { 
                       if (err) {
-                        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+                        return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
                       } else {
                         req.decoded = decoded;    
                         next();
+                        //console.log('decode')
+                        //console.log(decode)
                         //console.log('Token still alive ')
                         
                       }
@@ -47,8 +49,10 @@ const app = express.Router()
     
 //=================================================================================================================
 // route to return all users (GET http://localhost:8080/api/users)
-        app.get("/users",function(req,res){
-        Auth.find({}, (err, docs) => {
+        app.get("/",function(req,res){
+            var decode = jwt.decode(req.headers['x-access-token']);
+            console.log(decode.email)
+        Auth.find({"Email":decode.email}, (err, docs) => {
                  res.send(docs)
                })
              })
