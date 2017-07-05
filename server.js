@@ -23,7 +23,7 @@ const api = require('./route/api.routes')
 const api1 = require('./route/api1.routes')
 const token = require('./route/token.routes')
 const test = require('./route/test.routes')
-
+const users = require('./route/user.routes')
 //===========================================================
 
 app.use(session({secret: 'anystringoftext',
@@ -42,8 +42,8 @@ require('./config/passport')(passport);
 app.use('/api1', cors({ origin: 'http://localhost:3000' }))
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
 app.use('/auth', cors({ origin: 'http://localhost:3000' }))
-// app.use('/login', cors({ origin: 'http://localhost:3001' }))
-// app.use('/logout', cors({ origin: 'http://localhost:3001' }))
+ app.use('/login', cors({ origin: 'http://localhost:3000' }))
+// app.use('/logout', cors({ origin: 'http://localhost:3000' }))
 
 //===========================================================
 app.use(bodyParser.json())
@@ -65,6 +65,7 @@ app.use('/api' , api)
 app.use('/api1' , api1)
 app.use('/token', token)
 app.use('/test', test)
+app.use('/users', users)
 
 
 
