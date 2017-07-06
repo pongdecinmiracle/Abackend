@@ -24,8 +24,6 @@ const app = express.Router()
                       } else {
                         req.decoded = decoded;    
                         next();
-                        //console.log('decode')
-                        //console.log(decode)
                         //console.log('Token still alive ')
                         
                       }
@@ -44,13 +42,12 @@ const app = express.Router()
         });
 
 //=================================================================================================================
-// route to show a random message (GET http://localhost:8080/api/)
 
     
 //=================================================================================================================
-// route to return all users (GET http://localhost:8080/api/users)
+// route to return all users (GET http://localhost:3002/users)
         app.get("/",function(req,res){
-            var decode = jwt.decode(req.headers['x-access-token']);
+            var decode = jwt.decode(req.headers['x-access-token']||req.body.token);
             console.log(decode.email)
         Auth.find({"Email":decode.email}, (err, docs) => {
                  res.send(docs)

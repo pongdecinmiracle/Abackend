@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session');
 const Auth = require('../models/AuthDB')
 const User = require('../models/Users')
 const passport = require('passport')
@@ -9,11 +10,19 @@ const expressJwt = require('express-jwt');
 const secret = 'this is the secret secret secret 12356';
 //====================================================
 const app = express.Router()
+var sess
+var token
 
 //=================================================================================================================
-        // route to authenticate a user (POST http://localhost:8080/api/authenticate)
+        app.get('/',function(req,res){
+            console.log(sess)
+            res.send(sess)
+        })
 
-        app.post('/users/authenticate', function(req, res) {
+//=================================================================================================================
+        // route to authenticate a user (POST http://localhost:3002/test/login)
+
+        app.post('/login', function(req, res) {
 
   
                   Auth.findOne({
@@ -36,7 +45,7 @@ const app = express.Router()
                                     email: user.Email
                                         };
                                 var token = jwt.sign(profile, secret,{
-                                    expiresIn: '1440m' // exp in 24 hr
+                                    expiresIn: '1m' // exp in 24 hr
                                     });
                                    res.json({
                                       success: true,
@@ -44,6 +53,14 @@ const app = express.Router()
                                       token: token
                                       
                                     });
+
+                                    //create Session
+
+                                    sess = req.session;
+                                    sess.email=req.body.Email;
+                                    sess.token=token;
+                                    console.log(req.session)
+                                    // res.send('done');
                                     
                             
                                 }
@@ -55,7 +72,7 @@ const app = express.Router()
         app.use(function(req, res, next) {
 
               // check header or url parameters or post parameters for token
-              var token = req.body.token || req.query.token || req.headers['x-access-token'];
+               token = req.body.token || req.query.token || req.headers['x-access-token']|| sess.token;
               if (token) {
                   console.log(token)  
                     jwt.verify(token, secret , function(err, decoded) { 
@@ -82,19 +99,32 @@ const app = express.Router()
         });
 
 //=================================================================================================================
-// route to show a random message (GET http://localhost:8080/api/)
 
     
 //=================================================================================================================
-// route to return all users (GET http://localhost:8080/api/users)
-        app.get("/users",function(req,res){
-        Auth.find({}, (err, docs) => {
+// route to return all users (GET http://localhost:3002/test/users)
+         app.get("/users",function(req,res){
+           if(!token){
+
+           }else{
+            var decode = jwt.decode(req.headers['x-access-token']||req.body.token || sess.token);
+        Auth.find ( { $or : [{"Email":decode.email},{"Email":sess.email}] } , (err, docs) => {
                  res.send(docs)
                })
-             })
+             }
+         })
+             
 
 //=================================================================================================================
-   
+   app.get('/out', (req, res) => {
+    sess=req.session.destroy(() => {
+      req.logOut();
+      res.status(200);
+      res.redirect('/');
+    });
+});
 
 
 module.exports = app
+
+

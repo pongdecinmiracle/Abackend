@@ -21,9 +21,10 @@ const login = require('./route/login.routes') //login
 // const logout = require('./route/logout.routes') //login
 const addtracking = require('./route/addtracking.routes')
 const trackno = require('./route/trackno.routes')
-const token = require('./route/token.routes')
+// const token = require('./route/token.routes')
 const test = require('./route/test.routes')
 const users = require('./route/user.routes')
+const logout = require('./route/logout.routes')
 //===========================================================
 
 app.use(session({secret: 'anystringoftext',
@@ -65,8 +66,9 @@ app.use('/login', login) //login
 app.use('/users', users) //view profile
 app.use('/addtracking' , addtracking) //add tracknumber
 app.use('/trackno' , trackno) //tracking number
+app.use('/logout', logout)
 //=========================Test==================================
-app.use('/token', token) //test token
+// app.use('/token', token) //test token
 app.use('/test', test)
 
 
