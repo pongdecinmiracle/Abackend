@@ -18,13 +18,13 @@ const PORT = 3002
 //===========================================================
 const register = require('./route/register.routes') //register
 const login = require('./route/login.routes') //login
-// const logout = require('./route/logout.routes') //login
 const addtracking = require('./route/addtracking.routes')
 const trackno = require('./route/trackno.routes')
-// const token = require('./route/token.routes')
 const test = require('./route/test.routes')
 const users = require('./route/user.routes')
 const logout = require('./route/logout.routes')
+const service = require('./route/service.routes')
+const order = require('./route/order.routes')
 //===========================================================
 
 app.use(session({secret: 'anystringoftext',
@@ -43,6 +43,10 @@ mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`, (
 app.use('/trackno', cors({ origin: 'http://localhost:3000' }))
 app.use('/register', cors({ origin: 'http://localhost:3000' }))
 app.use('/login', cors({ origin: 'http://localhost:3000' }))
+app.use('/test', cors({ origin: 'http://localhost:3000' }))
+app.use('/service', cors({ origin: 'http://localhost:3000' }))
+app.use('/users', cors({ origin: 'http://localhost:3000' }))
+app.use('/order', cors({ origin: 'http://localhost:3000' }))
 //===========================================================
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
 // app.use('/logout', cors({ origin: 'http://localhost:3000' }))
@@ -53,22 +57,18 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(flash());
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
 
 //========================Routes===================================
-app.use('/register', register) //register
-app.use('/login', login) //login
-app.use('/users', users) //view profile
-app.use('/addtracking' , addtracking) //add tracknumber
-app.use('/trackno' , trackno) //tracking number
+app.use('/register', register) //@register
+app.use('/login', login) //@login
+app.use('/users', users) //@view profile
+app.use('/addtracking' , addtracking) //@add tracknumber
+app.use('/trackno' , trackno) //@tracking number
 app.use('/logout', logout)
-//=========================Test==================================
-// app.use('/token', token) //test token
+//=========================New==================================
+app.use('/service', service)
+app.use('/order', order)
+//========================Test==================================
 app.use('/test', test)
 
 

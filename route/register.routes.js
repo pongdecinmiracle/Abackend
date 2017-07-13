@@ -18,14 +18,14 @@ const app = express.Router()
       })
     })
 
-  // app.route('/:Name')
+  // app.route('/:Email')
   // .get((req, res) => {
   //   Auth.findById(req.params.Name, (err, docs) => {
   //     res.send(docs)
   //   })
   // })
   // .put((req, res) => {
-  //   Auth.findByIdAndUpdate(req.params.Name, req.body, (err) => {
+  //   Auth.findByIdAndUpdate(req.params.Email, req.body, (err) => {
   //     if (err) res.send('update error')
   //     else res.send('update success')
   //   })

@@ -11,47 +11,44 @@ const secret = 'this is the secret secret secret 12356';
 const app = express.Router()
 
 //=================================================================================================================
-        // route middleware to verify a token
+         // @route middleware to verify a token
         app.use(function(req, res, next) {
 
-              // check header or url parameters or post parameters for token
-              var token = req.body.token || req.query.token || req.headers['x-access-token'];
+            // @check header or url parameters or post parameters for token
+              token = req.body.token || req.query.token || req.headers['authorization'];
               if (token) {
-                  //console.log(token)  
                     jwt.verify(token, secret , function(err, decoded) { 
                       if (err) {
                         return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
                       } else {
                         req.decoded = decoded;    
                         next();
-                        //console.log('Token still alive ')
-                        
                       }
                     });
 
                   } else {
 
-                    // if there is no token
-                    // return an error
+                    // @if there is no token
+                    // @return an error
                     return res.status(403).send({ 
                         success: false, 
                         message: 'No token provided.' 
+                        
                     });
 
               }
         });
-
 //=================================================================================================================
 
     
 //=================================================================================================================
 // route to return all users (GET http://localhost:3002/users)
-        app.get("/",function(req,res){
-            var decode = jwt.decode(req.headers['x-access-token']||req.body.token);
-            console.log(decode.email)
-        Auth.find({"Email":decode.email}, (err, docs) => {
-                 res.send(docs)
-               })
+        app.post('/',function(req,res){
+            // var decode = jwt.decode(req.headers['authorization']||req.body.token);
+            // Auth.find({"Email":decode.email}, (err, docs) => {
+                    // res.json(docs)
+                  // })
+                  console.log(res)
              })
 
 //=================================================================================================================
