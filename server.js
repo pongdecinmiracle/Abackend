@@ -25,6 +25,8 @@ const users = require('./route/user.routes')
 const logout = require('./route/logout.routes')
 const service = require('./route/service.routes')
 const order = require('./route/order.routes')
+const logistic = require('./route/logistic.routes')
+
 //===========================================================
 
 app.use(session({secret: 'anystringoftext',
@@ -47,6 +49,7 @@ app.use('/test', cors({ origin: 'http://localhost:3000' }))
 app.use('/service', cors({ origin: 'http://localhost:3000' }))
 app.use('/users', cors({ origin: 'http://localhost:3000' }))
 app.use('/order', cors({ origin: 'http://localhost:3000' }))
+app.use('/logistic', cors({ origin: 'http://localhost:3000' }))
 //===========================================================
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
 // app.use('/logout', cors({ origin: 'http://localhost:3000' }))
@@ -68,6 +71,7 @@ app.use('/logout', logout)
 //=========================New==================================
 app.use('/service', service)
 app.use('/order', order)
+app.use('/logistic', logistic)
 //========================Test==================================
 app.use('/test', test)
 

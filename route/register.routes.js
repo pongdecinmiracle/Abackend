@@ -13,8 +13,14 @@ const app = express.Router()
       var newTrack = Auth(req.body)
       console.log(newTrack);
       newTrack.save((err) => {
-        if (err) res.send('insert error')
-        else res.send('insert success')
+        if (err) res.json({ 
+                  success: false, 
+                  message: 'Insert Failed.' 
+            });
+        else rres.json({ 
+                  success: false, 
+                  message: 'Insert Success.'
+            });
       })
     })
 

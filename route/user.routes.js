@@ -44,11 +44,11 @@ const app = express.Router()
 //=================================================================================================================
 // route to return all users (GET http://localhost:3002/users)
         app.post('/',function(req,res){
-            // var decode = jwt.decode(req.headers['authorization']||req.body.token);
-            // Auth.find({"Email":decode.email}, (err, docs) => {
-                    // res.json(docs)
-                  // })
-                  console.log(res)
+            var decode = jwt.decode(req.headers['authorization']||req.body.token);
+            Auth.find({"Email":decode.email}, (err, docs) => {
+                    res.json(docs)
+                  })
+                  // console.log(res)
              })
 
 //=================================================================================================================

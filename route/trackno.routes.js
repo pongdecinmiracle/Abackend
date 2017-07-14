@@ -14,35 +14,35 @@ var token
 
 //=================================================================================================================
         // @route middleware to verify a token
-        app.use(function(req, res, next) {
+        // app.use(function(req, res, next) {
 
-            // @check header or url parameters or post parameters for token
-              console.log(req.headers['authorization'])
-              token = req.body.token || req.query.token || req.headers['authorization'];
-              if (token) {
-                    jwt.verify(token, secret , function(err, decoded) { 
-                      if (err) {
-                        return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
-                      } else {
-                        req.decoded = decoded;    
-                        next();
-                        console.log("pass")
-                      }
-                    });
+        //     // @check header or url parameters or post parameters for token
+        //       console.log(req.headers['authorization'])
+        //       token = req.body.token || req.query.token || req.headers['authorization'];
+        //       if (token) {
+        //             jwt.verify(token, secret , function(err, decoded) { 
+        //               if (err) {
+        //                 return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
+        //               } else {
+        //                 req.decoded = decoded;    
+        //                 next();
+        //                 console.log("pass")
+        //               }
+        //             });
 
-                  } else {
+        //           } else {
 
-                    // @if there is no token
-                    // @return an error
-                    return res.status(403).send({ 
-                        success: false, 
-                        message: 'No token provided.' 
+        //             // @if there is no token
+        //             // @return an error
+        //             return res.status(403).send({ 
+        //                 success: false, 
+        //                 message: 'No token provided.' 
                         
-                    });
-                    console.log("not pass")
+        //             });
+        //             console.log("not pass")
 
-              }
-        });
+        //       }
+        // });
 
      
 

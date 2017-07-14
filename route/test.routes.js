@@ -97,16 +97,14 @@ var sess
 
 // //=================================================================================================================
 // route to return all users (GET http://localhost:3002/test/)
-         app.post('/',function(req,res){
-            var decode = jwt.decode(req.headers['authorization']||req.body.token );
-            // console.log(decode)
-        Auth.find ( { $or : [{"Email":decode.email}] } , (err, docs) => {
-                 res.send(docs)
+        app.post('/',function(req,res){
+    var decode = jwt.decode(req.headers['authorization']||req.body.token );
+            console.log(decode)
+            Auth.find ( { $or : [{"Email":decode.email}] } , (err, docs) => {
+                //  res.send(docs)
                  console.log(docs)
                })
-              
-             
-         })
+        })
         
 
 //=================================================================================================================
