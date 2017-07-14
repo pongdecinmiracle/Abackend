@@ -17,7 +17,7 @@ const app = express.Router()
                   success: false, 
                   message: 'Insert Failed.' 
             });
-        else rres.json({ 
+        else res.json({ 
                   success: false, 
                   message: 'Insert Success.'
             });

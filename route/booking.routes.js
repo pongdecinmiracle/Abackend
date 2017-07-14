@@ -12,8 +12,7 @@ const secret = 'this is the secret secret secret 12356';
 const app = express.Router()
 
 //=================================================================================================================
-         
-      //@route middleware to verify a token
+        //@route middleware to verify a token
         app.use(function(req, res, next) {
 
             // @check header or url parameters or post parameters for token
@@ -41,39 +40,40 @@ const app = express.Router()
               }
         });
 
+//=================================================================================================================
+
      
 
 //=================================================================================================================
 // route to return all users (GET http://localhost:3002/order)
+        app.post('/',function(req,res){
+            var decode = jwt.decode(req.headers['authorization']||req.body.token );
+            var Email = decode.email
 
-    app.put('/:OrderId',function(req,res){
-       var Data = req.body
-       var decode = jwt.decode(req.headers['authorization']||req.body.token );
-       var mail = decode.email
-       var DataAdd = {
-                           Logistic: Data.logistic,
-                           Price: Data.price
-                        }
+            var data = req.body
+             
+            if(!data){
+                res.json({ 
+                        success: false, 
+                        message: 'Not Found Data.' 
+                    });
+            }else if(data===" "){
+                   res.json({ 
+                        success: false, 
+                        message: 'Not Found Data.' 
+                    });
+            }else{
+                Order.find({Email:Email},(err,docs)=>{
+                    res.send(docs)
+                })
+            }
+            
+       
+            
 
-            Order.findOneAndUpdate({"_id" : req.params.OrderId,Email:mail} , DataAdd ,function(err,data){
-                    if(err){
-                        res.json({
-                                    success: false, 
-                                    message: 'Insert Failed.' 
-                                });
-                    }else{
-                        res.json({ 
-                                    success: true, 
-                                    message: 'Insert Success.',
-                                    OrderId: data._id
-                                });
-
-                    }
-            })
-    })
-    
-// //=================================================================================================================
- module.exports = app  
-
+                  
+})
+//=================================================================================================================
 
  
+module.exports = app  

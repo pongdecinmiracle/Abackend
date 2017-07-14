@@ -26,6 +26,7 @@ const logout = require('./route/logout.routes')
 const service = require('./route/service.routes')
 const order = require('./route/order.routes')
 const logistic = require('./route/logistic.routes')
+const booking = require('./route/booking.routes')
 
 //===========================================================
 
@@ -72,8 +73,10 @@ app.use('/logout', logout)
 app.use('/service', service)
 app.use('/order', order)
 app.use('/logistic', logistic)
+app.use('/booking', booking)
 //========================Test==================================
 app.use('/test', test)
+// app.use('/addtrack',addtrack)
 
 
 

@@ -35,6 +35,7 @@ const OrderSchema = new Schema({
   Box_height: {type:String, default: null},
   //============Logistic===================================
   Logistic: {type:String, default: null},
+  Price: {type:String, default: null},
   //============Date=======================================
   Create_date: {type:String, default: null},
   Payment_date: {type:String, default: null},

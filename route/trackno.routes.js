@@ -13,7 +13,7 @@ var token
 //@ ET089578821TH
 
 //=================================================================================================================
-        // @route middleware to verify a token
+        // //@route middleware to verify a token
         // app.use(function(req, res, next) {
 
         //     // @check header or url parameters or post parameters for token
