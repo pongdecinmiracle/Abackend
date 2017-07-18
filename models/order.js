@@ -36,6 +36,7 @@ const OrderSchema = new Schema({
   //============Logistic===================================
   Logistic: {type:String, default: null},
   Price: {type:String, default: null},
+  Drop_location: {type:String, default: null},
   //============Date=======================================
   Create_date: {type:String, default: null},
   Payment_date: {type:String, default: null},
@@ -44,7 +45,8 @@ const OrderSchema = new Schema({
             type : Date, default: Date.now
         },
   //============Status=====================================
-  Status: {type:String, default: null}
+  Status: {type:String, default: "Waiting"}, 
+  Payment_status: {type:String, default: "Inavalible"},
 })
 // const Order = mongoose.model('order', OrderSchema)
 

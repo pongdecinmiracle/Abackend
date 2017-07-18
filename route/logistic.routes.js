@@ -51,9 +51,15 @@ const app = express.Router()
        var decode = jwt.decode(req.headers['authorization']||req.body.token );
        var mail = decode.email
        var DataAdd = {
-                           Logistic: Data.logistic,
-                           Price: Data.price
+                           Logistic: Data.logistic, //front end must send a Logistic back to back end
+                           Price: Data.price //front end must send back price value
                         }
+// { type of logistic }
+//thailand-post
+//Kerry thai 
+//Sendit
+//FedEx 
+//DHL 
 
             Order.findOneAndUpdate({"_id" : req.params.OrderId,Email:mail} , DataAdd ,function(err,data){
                     if(err){

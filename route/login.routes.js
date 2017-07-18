@@ -37,7 +37,7 @@ app.post('/', function(req, res,next) {
                                 email: user.Email
                                     };
                             var token = jwt.sign(profile, secret,{
-                                expiresIn: '5m' // exp in 5 min
+                                expiresIn: '50m' // exp in 5 min
                                 });
 
                               res.json({
