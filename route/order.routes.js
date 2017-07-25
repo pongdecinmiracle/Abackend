@@ -7,38 +7,38 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken'); 
 const expressJwt = require('express-jwt');
 //====================================================
-const secret = 'this is the secret secret secret 12356';
+const secret = require('./lib/secret')
 //====================================================
 const app = express.Router()
 
 //=================================================================================================================
-        //@route middleware to verify a token
-        app.use(function(req, res, next) {
+        // //@route middleware to verify a token
+        // app.use(function(req, res, next) {
 
-            // @check header or url parameters or post parameters for token
-              token = req.body.token || req.query.token || req.headers['authorization'];
-              if (token) {
-                    jwt.verify(token, secret , function(err, decoded) { 
-                      if (err) {
-                        return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
-                      } else {
-                        req.decoded = decoded;    
-                        next();
-                      }
-                    });
+        //     // @check header or url parameters or post parameters for token
+        //       token = req.body.token || req.query.token || req.headers['authorization'];
+        //       if (token) {
+        //             jwt.verify(token, secret , function(err, decoded) { 
+        //               if (err) {
+        //                 return res.json({ success: false, message: 'Failed to authenticate token timeout.' });    
+        //               } else {
+        //                 req.decoded = decoded;    
+        //                 next();
+        //               }
+        //             });
 
-                  } else {
+        //           } else {
 
-                    // @if there is no token
-                    // @return an error
-                    return res.status(403).send({ 
-                        success: false, 
-                        message: 'No token provided.' 
+        //             // @if there is no token
+        //             // @return an error
+        //             return res.status(403).send({ 
+        //                 success: false, 
+        //                 message: 'No token provided.' 
                         
-                    });
+        //             });
 
-              }
-        });
+        //       }
+        // });
 
         //=================================================================================================================
 
@@ -50,7 +50,9 @@ const app = express.Router()
 
         app.post('/',function(req,res){
             var decode = jwt.decode(req.headers['authorization']||req.body.token );
-            var data = req.body
+            
+            var data = req.body.userinfo
+            console.log(data)
             if(!data){
                 res.json({
                         success: false, 
@@ -63,11 +65,12 @@ const app = express.Router()
                     });
             }else{
                 //=========================================================
-                var receiver = data.recieveaddress
+                var receiver = data.receiveaddress
                 var senderaddress = data.senderaddress
                 var sender_name = data.sendername.split(" ");
                 var receive_name = data.receivename.split(" ");
                 var weight = data.weight;
+                // console.log(data)
 
             
                 if(data.boxsize==="BOX 1 (10X10X10 cm)"){
@@ -103,6 +106,7 @@ const app = express.Router()
                 }
 
                 var mail = decode.email
+                // var mail = "pong@gmail.com"
 
  
 
@@ -111,34 +115,38 @@ const app = express.Router()
             if(data.boxsize==="BOX 1 (10X10X10 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
@@ -147,146 +155,162 @@ const app = express.Router()
             }else if(data.boxsize==="BOX 2 (20X20X20 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong2")
                 }
             }else if(data.boxsize==="BOX 3 (30X30X30 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong3")
                 }
             }else if(data.boxsize==="BOX 4 (40X40X40 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong4")
                 }
             }else if(data.boxsize==="BOX 5 (50X50X50 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong5")
                 }
             }
             // console.log(DataLogistic)
@@ -302,7 +326,7 @@ const app = express.Router()
                            Box_width : Box.width,
                            Box_height : Box.height,
                            Weight : weight,
-                           Status: "Waiting"
+                           Status: "Booking"
                         })
                         DataAdd.save((err) => {
                             if (err) 
@@ -320,9 +344,11 @@ const app = express.Router()
                                     Boxlength: Box.length,
                                     Boxwidth: Box.width
                                 });
+                                console.log(DataAdd._id)
                         })
                         
             }
+            console.log("Pass")
             
        
             
@@ -404,7 +430,7 @@ const app = express.Router()
                            Box_width : Box.width,
                            Box_height : Box.height,
                            Weight : weight,
-                           Status: "Waiting"
+                           Status: "Booking"
                         }
 
 
@@ -412,34 +438,38 @@ const app = express.Router()
             if(data.boxsize==="BOX 1 (10X10X10 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
@@ -448,148 +478,164 @@ const app = express.Router()
             }else if(data.boxsize==="BOX 2 (20X20X20 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong2")
                 }
             }else if(data.boxsize==="BOX 3 (30X30X30 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong3")
                 }
             }else if(data.boxsize==="BOX 4 (40X40X40 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong4")
                 }
             }else if(data.boxsize==="BOX 5 (50X50X50 cm)"){
                 if(data.weight==="100-250 gram"){
                     var DataLogistic = {
-                        DHLprice:  12,
-                        Kerryprice: 11,
+                        dhl:  12,
+                        Kerry: 11,
                         FedEx: 15,
-                        Thaipost: 10,
+                        Thaipost: 8,
+                        ThaipostEMS: 10,
                         Sendit: 13
                     }
                 }else if(data.weight==="251-500 gram"){
                     var DataLogistic = {
-                        DHLprice:  22,
-                        Kerryprice: 21,
+                        dhl:  22,
+                        Kerry: 21,
                         FedEx: 25,
-                        Thaipost: 20,
+                        Thaipost: 18,
+                        ThaipostEMS: 20,
                         Sendit: 23
                     }
                 }else if(data.weight==="501-750 gram"){
                     var DataLogistic = {
-                        DHLprice:  32,
-                        Kerryprice: 31,
+                        dhl:  32,
+                        Kerry: 31,
                         FedEx: 35,
-                        Thaipost: 30,
+                        Thaipost: 28,
+                        ThaipostEMS: 30,
                         Sendit: 33
                     }
                 }else if(data.weight==="751-1000 gram"){
                     var DataLogistic = {
-                        DHLprice:  42,
-                        Kerryprice: 41,
+                        dhl:  42,
+                        Kerry: 41,
                         FedEx: 45,
-                        Thaipost: 40,
+                        Thaipost: 38,
+                        ThaipostEMS: 40,
                         Sendit: 43
                     }
                 }else {
-                    console.log("wrong1")
+                    console.log("wrong5")
                 }
-            }
+            }            
             // console.log(DataLogistic)
 
             Order.findOneAndUpdate({"_id" : req.params.OrderId,Email:mail} , DataAdd ,function(err,data){
@@ -611,7 +657,7 @@ const app = express.Router()
 
                     }
             })
-
+            console.log("Pass")
 })
 
 //=================================================================================================================

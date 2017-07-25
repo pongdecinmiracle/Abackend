@@ -9,7 +9,7 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken'); 
 const expressJwt = require('express-jwt');
 //====================================================
-const secret = 'this is the secret secret secret 12356';
+const secret = require('./lib/secret')
 //====================================================
 const app = express()
 var token="safobog"
@@ -162,6 +162,50 @@ var sess
   //  Order.find({Email:"pong@gmail.com",Status:"Payment"},function(req,res){
   //               console.log(res.length)
   //             })
+  //=================================================================================================================
+  // app.post('/',function(req,res){
+       
+  //     var newTrack = Order(req.body)
+  //   //   console.log(newTrack);
+  //     newTrack.save((err) => {
+  //       if (err) res.send('insert error')
+  //       else res.send('insert success')
+  //     })
+  //   })
+  
+
+//=================================================================================================================
+//  app.put('/:Firstname',function(req,res){
+//        Order.findOneAndUpdate({Firstname_s : req.params.Firstname} , req.body,
+//            function(err,data){
+//                if(err){
+//                    console.log(err)
+//                }else{
+//                 //    console.log(data)
+//                 //    res,end(data)
+
+//                }
+//            })
+//     })
+  
+
+//=================================================================================================================
+// app.delete('/:Firstname_s',function(req,res){
+//        Order.findOneAndRemove(req.params.Firstname_s,
+//            function(err,data){
+//                if(err){
+//                    console.log(err)
+//                }else{
+//                 //    console.log(data)
+//                 //    res,end(data)
+
+//                }
+//            })
+//     })
+  
+
+//=================================================================================================================
+
 
 module.exports = app
 

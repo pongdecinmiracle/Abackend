@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const apiDB = require('../models/apitrack')
 const jwt = require('jsonwebtoken'); 
 const expressJwt = require('express-jwt');
-const secret = 'this is the secret secret secret 12356';
+const secret = require('./lib/secret')
 const TrackService = require('./lib/TrackService');
 const trackService = new TrackService({lang: "EN"});
 const app = express.Router()
@@ -15,7 +15,7 @@ var token
 //@ EY405510580TH
 
 //=================================================================================================================
-        //@route middleware to verify a token
+        // // @route middleware to verify a token
         // app.use(function(req, res, next) {
 
         //     // @check header or url parameters or post parameters for token

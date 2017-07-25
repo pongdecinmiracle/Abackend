@@ -9,6 +9,7 @@ const AuthSchema = new Schema({
   Firstname : {type: String,require: true},
   Lastname: {type: String,require: true},
   tel:{type: String,require: true},
+  Address:{type: String, default: null},
   reg_time : {
             type : Date, default: Date.now
         }

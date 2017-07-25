@@ -46,6 +46,7 @@ const OrderSchema = new Schema({
         },
   //============Status=====================================
   Status: {type:String, default: "Waiting"}, 
+  Status_logistic: {type:String, default: "Waiting"}, 
   Payment_status: {type:String, default: "Inavalible"},
 })
 // const Order = mongoose.model('order', OrderSchema)

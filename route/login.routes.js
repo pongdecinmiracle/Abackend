@@ -5,7 +5,7 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken'); 
 const expressJwt = require('express-jwt');
 //====================================================
-const secret = 'this is the secret secret secret 12356';
+const secret = require('./lib/secret')
 //====================================================
 const app = express.Router()
 
@@ -48,7 +48,7 @@ app.post('/', function(req, res,next) {
                                 
 
                             }
-                            
+                            // console.log("pass")
                         }
                         
                     })
