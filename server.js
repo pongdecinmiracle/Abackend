@@ -11,6 +11,7 @@ const cors = require('cors')
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+const omise = require('omise')
 
 //===========================================================
 const app = express()
@@ -28,6 +29,7 @@ const order = require('./route/order.routes')
 const logistic = require('./route/logistic.routes')
 const booking = require('./route/booking.routes')
 const waiting = require('./route/waiting.routes')
+// const Omise = require('./route/omise.routes')
 
 //===========================================================
 
@@ -48,12 +50,14 @@ app.use('/trackno', cors({ origin: 'http://localhost:3000' }))
 app.use('/register', cors({ origin: 'http://localhost:3000' }))
 app.use('/login', cors({ origin: 'http://localhost:3000' }))
 app.use('/test', cors({ origin: 'http://localhost:3000' }))
-// app.use('/information', cors({ origin: 'http://localhost:3000' }))
+app.use('/information', cors({ origin: 'http://localhost:3000' }))
 app.use('/users', cors({ origin: 'http://localhost:3000' }))
 app.use('/order', cors({ origin: 'http://localhost:3000' }))
 app.use('/logistic', cors({ origin: 'http://localhost:3000' }))
 app.use('/waiting', cors({ origin: 'http://localhost:3000' }))
 app.use('/booking', cors({ origin: 'http://localhost:3000' }))
+// app.use('/omise', cors({ origin: 'http://localhost:3000' }))
+
 //===========================================================
 // app.use('/api2', cors({ origin: 'http://localhost:3000' }))
 // app.use('/logout', cors({ origin: 'http://localhost:3000' }))
@@ -78,6 +82,8 @@ app.use('/order', order)
 app.use('/logistic', logistic)
 app.use('/booking', booking)
 app.use('/waiting' , waiting)
+// app.use('/Omise', Omise)
+
 //========================Test==================================
 app.use('/test', test)
 // app.use('/addtrack',addtrack)

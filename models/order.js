@@ -35,7 +35,7 @@ const OrderSchema = new Schema({
   Box_height: {type:String, default: null},
   //============Logistic===================================
   Logistic: {type:String, default: null},
-  Price: {type:String, default: null},
+  Price: {type:Number, default: null},
   Drop_location: {type:String, default: null},
   //============Date=======================================
   Create_date: {type:String, default: null},
@@ -45,7 +45,7 @@ const OrderSchema = new Schema({
             type : Date, default: Date.now
         },
   //============Status=====================================
-  Status: {type:String, default: "Waiting"}, 
+  Status: {type:String, default: "Booking"}, 
   Status_logistic: {type:String, default: "Waiting"}, 
   Payment_status: {type:String, default: "Inavalible"},
 })

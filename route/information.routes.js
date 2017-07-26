@@ -45,55 +45,48 @@ const app = express.Router()
 //               }
 //         });
 //=================================================================================================================
-  app.get('/:Email',function(req,res){
-            var decode = jwt.decode(req.headers['authorization'] );
-            var data = req.body
+// //check information  
+// app.get('/:Email',function(req,res){
+//             var decode = jwt.decode(req.headers['authorization'] );
+//             var data = req.body
             
-                //  Dropdata = {
-                //      Status:"Waiting"
-                //  }
-                // console.log(data)
-                //  var l = (data.OrderId).length
-                //  for(i=0;i<l;i++){
-                  //"_id":data.OrderId,
-                    //  Order.find ( {Email: decode.email,Status:"Booking",Status_logistic:"Prepare"} , (err, docs) => {
-                      Order.find ( {Email: req.params.Email,Status:"Booking",Status_logistic:"Prepare"} , (err, docs) => {
-                        // console.log(docs[1].Price)
-                        if(err){
+//                     //  Order.find ( {Email: decode.email,Status:"Booking",Status_logistic:"Prepare"} , (err, docs) => {
+//                       Order.find ( {Email: req.params.Email,Status:"Booking",Status_logistic:"Prepare"} , (err, docs) => {
+//                         if(err){
                        
-                        }else{
+//                         }else{
 
-                                  res.json({ 
-                                        success: true, 
-                                        message: 'Found Data.',
-                                        Data: docs
-                                    });         
-                        }
+//                                   res.json({ 
+//                                         success: true, 
+//                                         message: 'Found Data.',
+//                                         Data: docs
+//                                     });         
+//                         }
                         
-                    })//findOne   
-                //  }//for     
+//                     })//findOne     
        
-})
+// })
   
 
 //=================================================================================================================
+//API : Receive Data Page 
 app.post('/add',function(req,res){
             var decode = jwt.decode(req.headers['authorization'] );
-            var data = req.body
-            console.log(data)
+            var data = req.body.userinfo
+            // console.log(data)
             // console.log(decode)
             // var fullname = (data.userinfo.name).split(" ")
-            var name = (data.fullname).split(" ")
-            console.log(name)
+            var name = (data.receivename).split(" ")
+            // console.log(name)
                  var Addressdata = new Address({
                      Email: decode.email,
                      Firstname_r : name[0],
                      Lastname_r : name[1],
-                     Address_r : data.address,
+                     Address_r : data.receiveaddress,
                      Email_r : data.email,
                      Tel_r: data.tel
                  })
-                console.log(Addressdata)
+                // console.log(Addressdata)
                 Addressdata.save(function (err, docs) {
                           if (err) res.json({ 
                                       success: false, 
@@ -110,38 +103,39 @@ app.post('/add',function(req,res){
                 //  }//for     
        
 })
-  
-
-//=================================================================================================================
-app.post('/test',function(req,res){
+// view data
+app.post('/addr',function(req,res){
             var decode = jwt.decode(req.headers['authorization'] );
-            Address.find({Email: decode.email},function(err,docs) {
-              var l = docs.length
-              for(var i =0 ; i<l ; i++){
-                  console.log(docs[i].reg_time)
-                  var ti = docs[i].reg_time
-                  console.log(ti)
-                  res.json({
-
-                  })
-              }
-              
-              
-              // console.log(docs) 
-              //  var obj = { date: docs[0].reg_time }2017-07-24T04:13:35.768Z
-              // var obj = { date: '2017-07-24T04:13:35.768Z' }
-              // var decoded = decodetime(obj)
-              // var encoded = encodetime('2017-07-24T04:13:35.768Z')
-              // console.log(decoded)
-              // console.log(encoded) 
-              // var time = timestamp();
-              // console.log(time)
-
-            })
-       
+            // var data = req.body
+            // console.log(decode.email)
+            Address.find({"Email":decode.email}, (err, docs) => {
+                    res.json(docs)          
+            })        
 })
-  
-
+// get data
+app.get('/addr/:email',function(req,res){
+            // var decode = jwt.decode(req.headers['authorization'] );
+            // var data = req.body
+            // console.log(decode.email)
+            Address.find({"Email":req.params.email}, (err, docs) => {
+                    res.json(docs)
+                
+            })
+            
+})  
+// delete data
+app.put('/useraddr',function(req,res){
+            var decode = jwt.decode(req.headers['authorization'] );
+            var data = req.body
+            var orderid = data.OrderId
+            Address.remove({"Email":decode.email,Firstname_r:data.userinfo,}, (err, docs) => {
+                    res.json({
+                        Status : "success"
+                    })
+                
+            })
+            
+})
 //=================================================================================================================
                                  
 
